@@ -8,8 +8,20 @@ import terminal_engine as E
 
 
 def _pick(job, keys):
-    """Return bullets from a job dict in key order, skipping missing keys."""
-    return [job[k] for k in keys if k in job and job[k]]
+    """Return bullets from a job dict in key order, skipping missing keys.
+
+    If no keys are supplied (or none of them exist), fall back to every
+    non-metadata string value so manually-edited job descriptions always render.
+    """
+    picked = [job[k] for k in keys if k in job and job[k]]
+    if picked:
+        return picked
+    return _all_bullets(job)
+
+
+def _all_bullets(job):
+    """Return every non-empty, non-metadata string value from a job."""
+    return [v for k, v in job.items() if k not in ("role", "company", "dates") and isinstance(v, str) and v.strip()]
 
 
 def _compact_bullets(job):
@@ -44,20 +56,22 @@ def _render_jobs(r, jobs, current_pick=None, previous_pick=None, max_full=2):
     r.section("Work Experience", min_after=total_h)
 
     for idx, job in enumerate(jobs):
-        if idx < max_full:
-            picks = current_pick if idx == 0 else (previous_pick if idx == 1 else None)
-            bullets = _pick(job, picks) if picks else _compact_bullets(job)
-        else:
-            bullets = _compact_bullets(job)
+        picks = current_pick if idx == 0 else (previous_pick if idx == 1 else None)
+        bullets = _bullets_for_render(job, picks)
         r.job(job.get("role", ""), job.get("company", ""), job.get("dates", ""), bullets)
         if idx < len(jobs) - 1:
             r.gap()
 
 
 def _bullets_for_render(job, picks):
+    """Return bullets for a job. Explicit picks are preferred; if none match,
+    every non-metadata string value is rendered so manually-edited descriptions
+    never disappear."""
     if picks:
-        return _pick(job, picks)
-    return _compact_bullets(job)
+        picked = _pick(job, picks)
+        if picked:
+            return picked
+    return _all_bullets(job)
 
 
 def _many(r, items):

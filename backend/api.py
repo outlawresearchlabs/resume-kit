@@ -182,6 +182,10 @@ def api_ats_check(payload: dict):
     if not education:
         issues.append({"severity": "warning", "field": "sections.education", "message": "Education section is empty."})
 
+    certs = sections.get("certs", [])
+    if not certs:
+        issues.append({"severity": "info", "field": "sections.certs", "message": "No certifications listed. Add relevant certs if you hold them."})
+
     score = max(0, 100 - len([i for i in issues if i["severity"] == "error"]) * 15 - len([i for i in issues if i["severity"] == "warning"]) * 5)
 
     return JSONResponse({
@@ -447,6 +451,15 @@ def _build_question_mode_prompt(job_description, config_key, profile_data, jobs,
         Existing summary:
         {sections.get("summary", "")}
 
+        Certifications:
+        {json.dumps(sections.get("certs", []), indent=2)}
+
+        Education:
+        {json.dumps(sections.get("education", []), indent=2)}
+
+        Other highlights:
+        {json.dumps(sections.get("highlights", []), indent=2)}
+
         {previous_text}
 
         Instructions:
@@ -458,6 +471,7 @@ def _build_question_mode_prompt(job_description, config_key, profile_data, jobs,
         5. rewritten_jobs should rewrite bullet text to better match job-posting keywords while remaining truthful. Only include jobs where rewriting adds value.
         6. If the profile already looks strong for the role, questions may be empty. Otherwise ask 2-4 targeted questions.
         7. Do not invent facts. Use the existing bullets as source material and only sharpen phrasing.
+        8. The Certifications and Education sections above are part of the candidate's profile. Do not report them as missing if they are populated.
 
         {_base_rules()}
 
@@ -491,6 +505,15 @@ def _build_apply_mode_prompt(job_description, config_key, profile_data, jobs, jo
         Existing summary:
         {sections.get("summary", "")}
 
+        Certifications:
+        {json.dumps(sections.get("certs", []), indent=2)}
+
+        Education:
+        {json.dumps(sections.get("education", []), indent=2)}
+
+        Other highlights:
+        {json.dumps(sections.get("highlights", []), indent=2)}
+
         {previous_text}
 
         Instructions:
@@ -504,6 +527,7 @@ def _build_apply_mode_prompt(job_description, config_key, profile_data, jobs, jo
         7. skill_order must only include keys from the skills categories provided. Order by relevance to the posting.
         8. Return an empty questions array. Do not ask the user anything in this mode.
         9. In notes, include: (a) the top ATS keywords you targeted, (b) any gaps that still remain and whether the user should fill them manually.
+        10. The Certifications and Education sections above are part of the candidate's profile. Do not report them as missing if they are populated. Only report a certification gap if the job posting explicitly requires a certification the candidate does not have.
 
         {_base_rules()}
 

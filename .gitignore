@@ -1,0 +1,28 @@
+# Generated outputs
+out/*
+!out/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+venv/
+
+# Node / frontend
+web/node_modules/
+web/dist/
+*.log
+npm-debug.log*
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Local profile overrides
+*.local.yaml
+*.local.json

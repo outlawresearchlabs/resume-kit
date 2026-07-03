@@ -1,0 +1,32 @@
+services:
+  resume-kit:
+    build: .
+    container_name: resume-kit
+    ports:
+      - "8003:8003"
+    environment:
+      - API_PORT=8003
+      - RELOAD=false
+      # Default LLM provider used when the web UI has not overridden it.
+      # Supported: ollama, openai, anthropic, azure, vllm, lmstudio, custom
+      - LLM_PROVIDER=${LLM_PROVIDER:-ollama}
+      - LLM_BASE_URL=${LLM_BASE_URL:-http://blubox:11434/v1}
+      - LLM_API_KEY=${LLM_API_KEY:-}
+      - LLM_MODEL=${LLM_MODEL:-llama3.2}
+      - LLM_TEMPERATURE=${LLM_TEMPERATURE:-0.4}
+      - LLM_TIMEOUT=${LLM_TIMEOUT:-120}
+      # Ollama-specific alias for the default local endpoint
+      - OLLAMA_URL=${OLLAMA_URL:-http://blubox:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.2}
+      # Azure OpenAI optional settings
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT:-}
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY:-}
+      - AZURE_OPENAI_DEPLOYMENT=${AZURE_OPENAI_DEPLOYMENT:-}
+      - AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION:-2024-02-15-preview}
+    volumes:
+      - ./out:/app/out
+    restart: unless-stopped
+    extra_hosts:
+      # Make it easy to reach a host named blubox from inside the container.
+      # Override at runtime with: --add-host=blubox:<ip>
+      - "blubox:host-gateway"

@@ -1,0 +1,73 @@
+# Sample resume profile — replace with your own information in the web editor.
+# This file is loaded as the default profile when the app starts.
+contact:
+  name: Jordan Reyes
+  phone: +1 555-010-4242
+  email: jordan@example.com
+  location: Springfield, USA
+  linkedin: linkedin.com/in/example
+  github: github.com/example
+
+jobs:
+  - role: Security Engineer
+    company: Example Corp
+    dates: 2023 - Present
+    detections: Designed and tuned SIEM detection logic, reducing false positives while expanding coverage for attacker techniques.
+    investigate: Investigated security events across network, endpoint, and log sources to identify indicators of compromise.
+    automation: Built automation to triage routine alerts, adopted as a default workflow by multiple teams.
+    mentor: Mentored junior engineers and led internal knowledge-sharing sessions.
+
+  - role: SOC Analyst
+    company: Sample Managed Security
+    dates: 2021 - 2023
+    monitor: Monitored and investigated alerts across a 24/7 SOC serving managed-services customers.
+    hunt: Ran hypothesis-driven threat hunts and documented findings mapped to MITRE ATT&CK.
+    siem_build: Helped build and maintain SIEM/SOAR tooling for internal use.
+    initiative: Independently identified a critical misconfiguration and coordinated the fix across teams.
+
+  - role: IT Support Specialist
+    company: Demo Managed Services
+    dates: 2019 - 2021
+    compact: Delivered managed IT and security services for small-business customers; implemented hardening standards and designed backup and network architecture.
+
+skills:
+  leadership: Security Strategy, Risk Management, Executive Communication, Team Leadership, Program Management
+  security: Vulnerability Management, SIEM, EDR, Threat Detection, MITRE ATT&CK, Penetration Testing
+  risk_compliance: Risk Assessment, Compliance, Security Policies, Standards & Guidelines
+  cloud_infra: AWS, Azure, Microsoft 365, Docker, Infrastructure as Code, Network Architecture
+  networking: TCP/IP, DNS, Firewalls, VPN, Network Architecture
+  scripting: Python, Bash, PowerShell
+  customer_facing: Executive Presentations, Technical-to-Business Translation, Stakeholder Communication
+
+sections:
+  summary: >
+    Security engineer with hands-on experience in detection engineering, incident response, and cloud security.
+    Comfortable translating technical risk for business stakeholders and leading cross-functional initiatives.
+
+  highlights:
+    - "Led detection engineering improvements across a multi-cloud environment"
+    - "Experienced in vulnerability management and compliance alignment"
+    - "Built automation to reduce alert triage overhead"
+
+  education:
+    - ["B.S. Computer Science", "Example University", "2019"]
+
+  certs:
+    - "CompTIA Security+"
+
+  awards: []
+  community: []
+  homelab: []
+  research:
+    main: ""
+  project:
+    name: ""
+    desc: ""
+  publication:
+    title: ""
+    tag: ""
+    desc: ""
+    url: ""
+  speaking:
+    lead: ""
+    detail: ""

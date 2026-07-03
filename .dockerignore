@@ -1,0 +1,13 @@
+node_modules
+web/node_modules
+web/dist
+out
+.git
+.gitignore
+*.md
+Dockerfile
+docker-compose.yml
+.env
+__pycache__
+*.pyc
+.DS_Store

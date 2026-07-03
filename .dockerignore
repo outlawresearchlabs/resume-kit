@@ -1,13 +1,30 @@
-node_modules
-web/node_modules
-web/dist
+# Frontend build artifacts
+frontend/node_modules
+frontend/dist
+
+# Generated outputs
 out
+
+# Git / env
 .git
 .gitignore
-*.md
-Dockerfile
-docker-compose.yml
 .env
+
+# Python cache
 __pycache__
 *.pyc
+*.pyo
+*.egg-info
+
+# macOS / IDE
 .DS_Store
+.vscode
+.idea
+
+# Docker files
+Dockerfile
+docker-compose.yml
+
+# Docs (not needed in image)
+docs/*.md
+*.md

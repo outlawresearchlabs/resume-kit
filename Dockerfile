@@ -4,10 +4,10 @@
 # Stage 1: build the React frontend
 # ---------------------------------------------------------------------------
 FROM node:20-alpine AS frontend
-WORKDIR /app/web
-COPY web/package*.json ./
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
 RUN npm ci
-COPY web/ ./
+COPY frontend/ ./
 RUN npm run build
 
 # ---------------------------------------------------------------------------
@@ -25,10 +25,9 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy backend code, profile data, fonts, and the built frontend
-COPY *.py ./
-COPY *.yaml ./
+COPY backend ./backend
 COPY fonts ./fonts
-COPY --from=frontend /app/web/dist ./web/dist
+COPY --from=frontend /app/frontend/dist ./frontend/dist
 
 # Generated resumes are written here; mount a volume if you want persistence
 RUN mkdir -p /app/out
@@ -36,6 +35,7 @@ VOLUME ["/app/out"]
 
 EXPOSE 8003
 ENV API_PORT=8003 \
+    PYTHONPATH=/app \
     RELOAD=false \
     LLM_PROVIDER=ollama \
     LLM_BASE_URL=http://blubox:11434/v1 \
@@ -46,4 +46,5 @@ ENV API_PORT=8003 \
     OLLAMA_URL=http://blubox:11434 \
     OLLAMA_MODEL=llama3.2
 
+WORKDIR /app/backend
 CMD ["python", "api.py"]

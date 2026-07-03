@@ -46,12 +46,15 @@ app.add_middleware(
 )
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-_OUT_DIR = os.path.join(_HERE, "out")
+_ROOT_DIR = os.path.dirname(_HERE)
+
+# Generated files land in the repo root's ./out directory by default.
+_OUT_DIR = os.environ.get("RESUME_OUT_DIR") or os.path.join(_ROOT_DIR, "out")
 os.makedirs(_OUT_DIR, exist_ok=True)
 
 # Path to the built React frontend; mounted at the very bottom of this file
 # so API routes take precedence.
-_WEB_DIST = os.path.join(_HERE, "web", "dist")
+_WEB_DIST = os.path.join(_ROOT_DIR, "frontend", "dist")
 
 # ---------------------------------------------------------------------------
 # PDF generation

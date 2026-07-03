@@ -30,7 +30,9 @@ from reportlab.pdfbase.ttfonts import TTFont
 # ----- fonts (bundled ./fonts first, Anthropic skills path as fallback) -----
 import os as _os
 _HERE = _os.path.dirname(_os.path.abspath(__file__))
-_FONT_DIRS = [_os.path.join(_HERE, "fonts"),
+_ROOT_DIR = _os.path.dirname(_HERE)
+_FONT_DIRS = [_os.path.join(_ROOT_DIR, "fonts"),
+              _os.path.join(_HERE, "fonts"),
               "/mnt/skills/examples/canvas-design/canvas-fonts"]
 FDIR = next((d for d in _FONT_DIRS
              if _os.path.exists(_os.path.join(d, "JetBrainsMono-Regular.ttf"))), _FONT_DIRS[0])

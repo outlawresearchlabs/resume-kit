@@ -151,21 +151,27 @@ def _load_profile(path=None, data=None):
     publication = None
     publication_raw = section("publication")
     if isinstance(publication_raw, dict):
-        publication = (
+        pub_tuple = (
             publication_raw.get("title", ""),
             str(publication_raw.get("tag", "")),
             publication_raw.get("desc", ""),
             publication_raw.get("url", ""),
         )
+        if any(v.strip() for v in pub_tuple):
+            publication = pub_tuple
     elif isinstance(publication_raw, (list, tuple)) and len(publication_raw) == 4:
-        publication = tuple(publication_raw)
+        if any(str(v).strip() for v in publication_raw):
+            publication = tuple(publication_raw)
 
     speaking = None
     speaking_raw = section("speaking")
     if isinstance(speaking_raw, dict):
-        speaking = (speaking_raw.get("lead", ""), speaking_raw.get("detail", ""))
+        spk_tuple = (speaking_raw.get("lead", ""), speaking_raw.get("detail", ""))
+        if any(v.strip() for v in spk_tuple):
+            speaking = spk_tuple
     elif isinstance(speaking_raw, (list, tuple)) and len(speaking_raw) == 2:
-        speaking = tuple(speaking_raw)
+        if any(str(v).strip() for v in speaking_raw):
+            speaking = tuple(speaking_raw)
 
     refs = raw.get("references", {})
     refs_left = _as_tuples(refs.get("left", []))

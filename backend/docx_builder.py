@@ -210,9 +210,10 @@ def build_ats_docx(profile_data, config_key="executive", overrides=None, out_pat
     publications = []
     pub_raw = sections.get("publication")
     if isinstance(pub_raw, dict):
-        publications.append(pub_raw)
+        if any(str(v).strip() for v in pub_raw.values() if isinstance(v, str)):
+            publications.append(pub_raw)
     elif isinstance(pub_raw, list):
-        publications = pub_raw
+        publications = [p for p in pub_raw if any(str(v).strip() for v in (p.values() if isinstance(p, dict) else p) if isinstance(v, str))]
     if publications:
         _add_heading(doc, "Publications")
         for pub in publications:
